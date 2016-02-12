@@ -1,0 +1,21 @@
+# Fichiers et dossier à ignorer
+
+# Ignorer le dossier bin
+/MaBiblio/bin
+/MaBiblio.Tests/bin
+
+# Ignorer le dossier obj
+/MaBiblio/obj
+/MaBiblio.Tests/obj
+
+# Ignorer le dossier packages
+/packages
+
+# Ignorer le dossier App_Data
+/MaBiblio/App_Data
+
+# Ignorer les fichiers .suo
+*.suo
+
+# Ignorer les fichiers .user
+*.user
