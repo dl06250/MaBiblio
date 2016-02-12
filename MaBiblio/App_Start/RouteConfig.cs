@@ -16,7 +16,13 @@ namespace MaBiblio
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Afficher", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Afficher",
+                url: "Afficher/{action}/{id}",
+                defaults: new { action = "Index", id = UrlParameter.Optional }
             );
         }
     }
