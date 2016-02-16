@@ -1,0 +1,46 @@
+﻿@model MaBiblio.ViewModels.LivreEmprunt
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Fiche d'un livre</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Fiche d'un livre
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Titre</td>
+                <td>@Model.Livre.Titre</td>
+            </tr>
+            <tr>
+                <td>Date de parution</td>
+                <td>@Model.Livre.Parution</td>
+            </tr>
+            <tr>
+                <td>Emprunteur</td>
+                <td>@Model.Emprunteur.Nom</td>
+            </tr>  
+            @if(@Model.Emprunteur.Nom!="Disponible")
+            {             
+                <tr>
+                    <td>Email</td>
+                    <td>@Model.Emprunteur.Email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

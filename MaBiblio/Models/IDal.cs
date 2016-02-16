@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MaBiblio.ViewModels;
 
 namespace MaBiblio.Models
 {
     public interface IDal : IDisposable
     {
-        List<Livres> ObtenirTousLesLivres();
-        List<Livres> ObtenirTousLesLivres(int id);
-        List<Auteurs> ObtenirTousLesAuteurs();
-        Livres ObtenirUnLivre(int id);
+        List<Livre> ObtenirTousLesLivres();
+        List<Livre> ObtenirTousLesLivres(int id);
+        List<Auteur> ObtenirTousLesAuteurs();
+        LivreEmprunt ObtenirUnLivre(int id);
     }
 }

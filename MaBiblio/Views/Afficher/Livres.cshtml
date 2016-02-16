@@ -1,0 +1,40 @@
+﻿@model List<MaBiblio.Models.Livre>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>List des livres</title>
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+            padding: 4px;
+        }
+
+        td, th {
+            border: 1px solid black;
+            padding: 4px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Titre</th>
+            <th>Auteur</th>
+        </tr>
+        @foreach (var livre in Model)
+        {
+         <tr>
+             <td>@livre.Titre</td>
+             <td>@livre.Auteur.Nom</td>
+         </tr>
+        }
+    </table>
+</body>
+</html>

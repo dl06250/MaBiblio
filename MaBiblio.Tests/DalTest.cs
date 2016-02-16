@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MaBiblio.Models;
+using MaBiblio.ViewModels;
 
 namespace MaBiblio.Tests
 {
@@ -29,7 +30,7 @@ namespace MaBiblio.Tests
         [TestMethod]
         public void ObtenirTousLesLivresRenvoieCinqLivres()
         {
-            List<Livres> listeDesLivres = dal.ObtenirTousLesLivres();
+            List<Livre> listeDesLivres = dal.ObtenirTousLesLivres();
             Assert.IsNotNull(listeDesLivres);
             Assert.AreEqual(5, listeDesLivres.Count);
         }
@@ -37,7 +38,7 @@ namespace MaBiblio.Tests
         [TestMethod]
         public void ObtenirTousLesAuteursRenvoieTroisAuteurs()
         {
-            List<Auteurs> listeDesAuteurs = dal.ObtenirTousLesAuteurs();
+            List<Auteur> listeDesAuteurs = dal.ObtenirTousLesAuteurs();
             Assert.IsNotNull(listeDesAuteurs);
             Assert.AreEqual(3, listeDesAuteurs.Count);
         }
@@ -45,7 +46,7 @@ namespace MaBiblio.Tests
         [TestMethod]
         public void ObtenirTousLesLivresDeCamusRenvoieDeuxLivres()
         {
-            List<Livres> listeDesLivresDeCamus = dal.ObtenirTousLesLivres(3);
+            List<Livre> listeDesLivresDeCamus = dal.ObtenirTousLesLivres(3);
             Assert.IsNotNull(listeDesLivresDeCamus);
             Assert.AreEqual(2, listeDesLivresDeCamus.Count);
             bool existe=listeDesLivresDeCamus.Exists(l => l.Titre=="L'étranger");
@@ -57,9 +58,9 @@ namespace MaBiblio.Tests
         [TestMethod]
         public void ObtenirLeLivreLesMiserables()
         {
-            Livres lesMiserables = dal.ObtenirUnLivre(3);
+            LivreEmprunt lesMiserables = dal.ObtenirUnLivre(3);
             Assert.IsNotNull(lesMiserables);
-            Assert.AreEqual("Les misérables", lesMiserables.Titre);
+            Assert.AreEqual("Les misérables", lesMiserables.Livre.Titre);
         }
     }
 }
