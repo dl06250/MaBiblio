@@ -13,19 +13,14 @@ namespace MaBiblio.Controllers
         private IDal dal;
 
         public AfficherController()
-            : this(new DalEnDur())
         {
-        }
-
-        public AfficherController(IDal dalIoc)
-        {
-            dal = dalIoc;
+            dal = DalEnDur.Instance;
         }
         
         //
         // GET: /Afficher/
         //Affiche la liste des livres
-        public ActionResult Livres()
+        public ActionResult Afficher()
         {
             List<Livre> listeDesLivres = dal.ObtenirTousLesLivres();
             return View(listeDesLivres);
@@ -45,17 +40,39 @@ namespace MaBiblio.Controllers
         // Affiche la liste des livres d'un auteur
         public ActionResult Auteur(int id)
         {
-            List<Livre> listeDesLivres = dal.ObtenirTousLesLivres(id);
+            if (!dal.ObtenirTousLesAuteurs().Exists(a => a.Id == id))
+            {
+                ViewData["message"] = "L'auteur '"+id.ToString()+"' n'existe pas dans la base.";
+                return View("Error");
+            }
+
+            List<Livre> listeDesLivres = dal.ObtenirTousLesLivres().FindAll(l => l.Auteur.Id == id);     
             return View(listeDesLivres);
         }
 
         //
         // GET: /Afficher/Livre/{idLivre}
         // Affiche la fiche d'un livre
+        // On utilise livreEmprunte pour ajouter le nom de l'emprunteur si besoin
         public ActionResult Livre(int id)
         {
-            LivreEmprunt livre = dal.ObtenirUnLivre(id);
-            return View(livre);
+            Livre livreDisponible = dal.ObtenirTousLesLivres().Find(d => d.Id == id);
+            if (livreDisponible == null)
+            {
+                ViewData["message"] = "Le livre '" + id.ToString() + "' n'existe pas dans la base.";
+                return View("Error");
+            }
+
+            LivreEmprunt livreEmprunte = new LivreEmprunt();
+            livreEmprunte = dal.ObtenirTousLesLivresEmpruntes().Find(e => e.Livre.Id == id);
+
+            if (livreEmprunte == null)
+            {
+                livreEmprunte = new LivreEmprunt();
+                livreEmprunte.Livre = livreDisponible;
+            }
+
+            return View(livreEmprunte);
         }
 
     }

@@ -8,12 +8,24 @@ namespace MaBiblio.Models
 {
     public class DalEnDur : IDal
     {
+        private static DalEnDur instance;
+
         private List<Auteur> listeDesAuteurs;
         private List<Livre> listeDesLivres;
         private List<Client> listeDesClients;
-        private List<Emprunt> listeDesEmprunts;
+        private List<LivreEmprunt> listeLivresEmpruntes;
 
-        public DalEnDur()
+        public static DalEnDur Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new DalEnDur();
+                return instance;
+            }
+        }
+
+        private DalEnDur()
         {
             listeDesAuteurs = new List<Auteur>
             {
@@ -37,11 +49,11 @@ namespace MaBiblio.Models
                 new Client {Email="client2@gmail.com", Nom="Mlle Client2"}
             };
 
-            listeDesEmprunts = new List<Emprunt>
+            listeLivresEmpruntes = new List<LivreEmprunt>
             {
-                new Emprunt {Client=listeDesClients.Find(c => c.Email=="client1@gmail.com"), Livre=listeDesLivres.Find(l => l.Id==2)},
-                new Emprunt {Client=listeDesClients.Find(c => c.Email=="client2@gmail.com"), Livre=listeDesLivres.Find(l => l.Id==4)},
-                new Emprunt {Client=listeDesClients.Find(c => c.Email=="client2@gmail.com"), Livre=listeDesLivres.Find(l => l.Id==5)}
+                new LivreEmprunt {Emprunteur=listeDesClients.Find(c => c.Email=="client1@gmail.com"), Livre=listeDesLivres.Find(l => l.Id==2)},
+                new LivreEmprunt {Emprunteur=listeDesClients.Find(c => c.Email=="client2@gmail.com"), Livre=listeDesLivres.Find(l => l.Id==4)},
+                new LivreEmprunt {Emprunteur=listeDesClients.Find(c => c.Email=="client2@gmail.com"), Livre=listeDesLivres.Find(l => l.Id==5)}
             };
        }
 
@@ -50,42 +62,35 @@ namespace MaBiblio.Models
             return listeDesLivres;
         }
 
-        public List<Livre> ObtenirTousLesLivres(int id)
-        {
-            List<Livre> listeDesLivresDUnAuteur = new List<Livre>();
-            foreach (Livre livre in listeDesLivres.Where(l=>l.Auteur.Id==id))
-            {
-                listeDesLivresDUnAuteur.Add(livre);
-            }
-            return listeDesLivresDUnAuteur;
-        }
-
         public List<Auteur> ObtenirTousLesAuteurs()
         {
             return listeDesAuteurs;
         }
 
-        public LivreEmprunt ObtenirUnLivre(int id)
+        public List<LivreEmprunt> ObtenirTousLesLivresEmpruntes()
         {
-            LivreEmprunt livre=new LivreEmprunt();
-            livre.Livre = listeDesLivres.Find(l => l.Id == id);
-            if (listeDesEmprunts.Exists(e => e.Livre.Id == livre.Livre.Id))
-                livre.Emprunteur = listeDesEmprunts.Find(e => e.Livre.Id == livre.Livre.Id).Client;
-            else
-            {
-                livre.Emprunteur = new Client();
-                livre.Emprunteur.Nom = "Disponible";
-            }
-
-            return livre;
-          }
+            return listeLivresEmpruntes;
+        }
 
         public void Dispose()
         {
             listeDesLivres = new List<Livre>();
-            listeDesEmprunts = new List<Emprunt>();
             listeDesClients = new List<Client>();
             listeDesAuteurs = new List<Auteur>();
+            listeLivresEmpruntes = new List<LivreEmprunt>();
+        }
+
+
+        public void CreerLivre(string titre, DateTime date, Auteur auteur)
+        {
+            int id = listeDesLivres.Count == 0 ? 1 : listeDesLivres.Max(l => l.Id) + 1;
+            listeDesLivres.Add(new Livre { Id = id, Titre = titre, Auteur = auteur, Parution = date });
+        }
+
+
+        public bool LivreExiste(string titre)
+        {
+            return listeDesLivres.Any(livre => livre.Titre == titre);
         }
     }
 }

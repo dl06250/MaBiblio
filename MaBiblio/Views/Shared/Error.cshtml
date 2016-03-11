@@ -1,0 +1,26 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Error</title>
+</head>
+<body>
+    <div style="color:red">
+        @{
+            if (String.IsNullOrWhiteSpace((string)ViewData["message"]))
+            {
+                <h2>Erreur...</h2>
+            }
+            else
+            {
+                <h2>@ViewData["message"]</h2>
+            }
+        }
+    </div>
+</body>
+</html>

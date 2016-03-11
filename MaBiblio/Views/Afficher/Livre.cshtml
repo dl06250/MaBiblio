@@ -27,18 +27,26 @@
             </tr>
             <tr>
                 <td>Date de parution</td>
-                <td>@Model.Livre.Parution</td>
+                <td>@Model.Livre.Parution.ToString("dd/MM/yyyy")</td>
             </tr>
-            <tr>
-                <td>Emprunteur</td>
-                <td>@Model.Emprunteur.Nom</td>
-            </tr>  
-            @if(@Model.Emprunteur.Nom!="Disponible")
-            {             
-                <tr>
-                    <td>Email</td>
-                    <td>@Model.Emprunteur.Email</td>
-                </tr>
+            @{
+                if (@Model.Emprunteur != null)
+                {
+                    <tr>
+                        <td>Emprunté par</td>
+                        <td>@Model.Emprunteur.Nom</td>
+                    </tr>  
+                    <tr>
+                        <td>Email</td>
+                        <td>@Model.Emprunteur.Email</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td>Livre disponible</td>
+                    </tr>
+                }   
             }
         </tbody>
     </table>

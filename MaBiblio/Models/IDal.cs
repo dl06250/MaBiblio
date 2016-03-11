@@ -10,8 +10,9 @@ namespace MaBiblio.Models
     public interface IDal : IDisposable
     {
         List<Livre> ObtenirTousLesLivres();
-        List<Livre> ObtenirTousLesLivres(int id);
         List<Auteur> ObtenirTousLesAuteurs();
-        LivreEmprunt ObtenirUnLivre(int id);
+        List<LivreEmprunt> ObtenirTousLesLivresEmpruntes();
+        void CreerLivre(string titre, DateTime date, Auteur auteur);
+        bool LivreExiste(string titre);
     }
 }

@@ -1,0 +1,56 @@
+﻿@model MaBiblio.ViewModels.LivreAjout
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Ajouter un Livre</title>
+
+    <style type="text/css">
+        .field-validation-error { color : #f00;}
+        .validation-summary-errors { color : #f00; font-weight: bold}
+	    .input-validation-error { border: 2px solid #f00;background-color : #fee}
+    </style>
+
+    <script type="text/javascript" src="~/Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate-vsdoc.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript" src="~/Scripts/globalize.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            Globalize.culture("fr-FR");
+        });
+    </script>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        <fieldset>
+            <legend>Ajouter un livre</legend>
+
+            <div>
+                @Html.LabelFor(model => model.Titre)
+                @Html.TextBoxFor(model => model.Titre)
+                @Html.ValidationMessageFor(model => model.Titre)
+            </div>
+            <div>
+                @Html.LabelFor(model => model.Parution)
+                @Html.TextBoxFor(model => model.Parution, "dd/MM/yyyy")
+                @Html.ValidationMessageFor(model => model.Parution)
+            </div>
+            <div>
+                @Html.LabelFor(model => model.AuteurSelectionneId)
+                @Html.DropDownListFor(model => model.AuteurSelectionneId, new SelectList(Model.ListeDesAuteurs, "Id", "Nom", Model.AuteurSelectionneId))
+            </div>
+            <br />
+            <input type="submit" value="Ajouter" />
+        </fieldset>
+    }
+</body>
+</html>

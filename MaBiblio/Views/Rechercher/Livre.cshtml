@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Recherche</title>
+</head>
+<body>
+    @using (Html.BeginForm("Livre", "Rechercher"))
+    {
+        @Html.Label("Chaîne recherchée")
+        @Html.TextBox("str")
+        <input type="submit" value="Rechercher" />
+        <span style="font-weight:bold; color:red">@ViewData["errorMessage"]</span>
+    }
+</body>
+</html>
